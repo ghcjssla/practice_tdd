@@ -1,11 +1,16 @@
 package doller;
 
-public class Dollar extends Money {
+public class Dollar {
+
+	int amount = 10;
+
 	public Dollar(int amount) {
-		this.amount = amount;
+		// TODO Auto-generated constructor stub
 	}
 
-	public Dollar times(int multiplier) {
-		return new Dollar(amount * multiplier);
+	public void times(int multiplier) {
+		// TODO Auto-generated method stub
+		
 	}
+
 }
