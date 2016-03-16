@@ -19,6 +19,13 @@ import org.junit.Test;
  * 2. 스텁 구현으로 빠르게 컴파일을 통과하도록 만듬
  * 3. 올바르다고 생각하는 코드를 입력하여 테스트를 통과
  * 
+ * 3장
+ * 1.우리의 디자인 패턴(value object pattern)이 하나의 또 다른 오퍼레이션을 암시한다는 걸 알아챘다.
+ * 2.해당 오퍼레이션을 테스트했다.
+ * 3.해당 오퍼레이션을 간단히 구현했다.
+ * 4.곧장 리팩토링하는 대신 테스트를 조금 더 했다.
+ * 5. 두 경우를 모두 수용할 수 있도록 리팩토링했다.
+
  */
 public class Tests {
 	@Test
@@ -29,5 +36,11 @@ public class Tests {
 		assertEquals(10, product.amount);
 		product = five.times(3);
 		assertEquals(15, product.amount);
+	}
+	
+	@Test
+	public void testEqualiity(){
+		assertTrue(new Dollar(5).equals(new Dollar(5)));
+		assertFalse(new Dollar(5).equals(new Dollar(6)));
 	}
 }
