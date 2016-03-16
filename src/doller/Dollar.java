@@ -2,15 +2,14 @@ package doller;
 
 public class Dollar {
 
-	int amount = 10;
+	int amount;
 
 	public Dollar(int amount) {
-		// TODO Auto-generated constructor stub
+		this.amount = amount;
 	}
 
-	public void times(int multiplier) {
-		// TODO Auto-generated method stub
-		
+	void times(int multiplier) {
+		amount *= multiplier;
 	}
 
 }
