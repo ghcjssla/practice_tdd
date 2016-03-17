@@ -43,6 +43,11 @@ import org.junit.Test;
  * 2.두 번째 클래스(Franc)도 Money의 하위클래스로 만들었다.
  * 3.불필요한 구현을 제거하기 전에 두 equals() 구현을 일치시켰다.
  * 
+ * 7장
+ * 1.우릴 괴롭히던 결함을 끄집어내서 테스트에 담아냈다.
+ * 2.완벽하진 않지만 그럭저럭 봐줄만한 방법(getClass())으로 테스트를 통과하게 만들었다.
+ * 3.더 많은 동기가 있기 전에는 더 많은 설계를 도입하지 않기로 했다.
+ * 
  */
 public class Tests {
 	@Test
@@ -69,5 +74,6 @@ public class Tests {
 		assertFalse(new Dollar(5).equals(new Dollar(6)));
 		assertTrue(new Franc(5).equals(new Franc(5)));
 		assertFalse(new Franc(5).equals(new Franc(6)));
+		assertFalse(new Franc(5).equals(new Dollar(5)));
 	}
 }
