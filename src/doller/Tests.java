@@ -37,14 +37,23 @@ import org.junit.Test;
  * 2.뻔뻔스럽게도 중복을 만들고 조금 고쳐서 테스틑를 작성했다.
  * 3.설상가상으로 모델 코드까지 도매금으로 복사하고 수정해서 테스트를 통과했다.
  * 4.중복이 사라지기 전에는 집에 가지 않겠다고 약속했다.
- *
+ * 
+ * 6장
+ * 1.공통된 코드를 첫 번째 클래스(Dollar)에서 상위 클래스(Money)로 단계적으로 옮겼다.
+ * 2.두 번째 클래스(Franc)도 Money의 하위클래스로 만들었다.
+ * 3.불필요한 구현을 제거하기 전에 두 equals() 구현을 일치시켰다.
+ * 
  */
 public class Tests {
 	@Test
 	public void testMultiplication(){
-		Dollar five = new Dollar(5);
-		assertEquals(new Dollar(10), five.times(2));
-		assertEquals(new Dollar(15), five.times(3));
+		Dollar dollarfive = new Dollar(5);
+		assertEquals(new Dollar(10), dollarfive.times(2));
+		assertEquals(new Dollar(15), dollarfive.times(3));
+		
+		Franc francfive = new Franc(5);
+		assertEquals(new Franc(10), francfive.times(2));
+		assertEquals(new Franc(15), francfive.times(3));
 	}
 	
 	@Test
@@ -58,5 +67,7 @@ public class Tests {
 	public void testEqualiity(){
 		assertTrue(new Dollar(5).equals(new Dollar(5)));
 		assertFalse(new Dollar(5).equals(new Dollar(6)));
+		assertTrue(new Franc(5).equals(new Franc(5)));
+		assertFalse(new Franc(5).equals(new Franc(6)));
 	}
 }
