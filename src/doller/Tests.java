@@ -25,17 +25,19 @@ import org.junit.Test;
  * 3.해당 오퍼레이션을 간단히 구현했다.
  * 4.곧장 리팩토링하는 대신 테스트를 조금 더 했다.
  * 5. 두 경우를 모두 수용할 수 있도록 리팩토링했다.
-
+ * 
+ * 4장
+ * 1.오직 테스트를 향상시키기 위해서만 개발된 기능을 사아ㅛㅇ했다.
+ * 2.두 테스트가 동시에 실패하면 망한다는 점을 인식했다.
+ * 3.위험 요소가 있음에도 계속 진행했다.
+ * 4.테스트와 코드 사이의 결합도를 낮추기 위해, 테스트하는 객체의 새 기능을 사용했다.
  */
 public class Tests {
 	@Test
 	public void testMultiplication(){
 		Dollar five = new Dollar(5);
-		Dollar product = five.times(2);
-		five.times(2);
-		assertEquals(10, product.amount);
-		product = five.times(3);
-		assertEquals(15, product.amount);
+		assertEquals(new Dollar(10), five.times(2));
+		assertEquals(new Dollar(15), five.times(3));
 	}
 	
 	@Test
