@@ -31,6 +31,13 @@ import org.junit.Test;
  * 2.두 테스트가 동시에 실패하면 망한다는 점을 인식했다.
  * 3.위험 요소가 있음에도 계속 진행했다.
  * 4.테스트와 코드 사이의 결합도를 낮추기 위해, 테스트하는 객체의 새 기능을 사용했다.
+ * 
+ * 5장
+ * 1.큰 테스트를 공략할 수 없다. 그래서 진전을 나타낼 수 있는 자그마한 테스트를 만들었다.
+ * 2.뻔뻔스럽게도 중복을 만들고 조금 고쳐서 테스틑를 작성했다.
+ * 3.설상가상으로 모델 코드까지 도매금으로 복사하고 수정해서 테스트를 통과했다.
+ * 4.중복이 사라지기 전에는 집에 가지 않겠다고 약속했다.
+ *
  */
 public class Tests {
 	@Test
@@ -38,6 +45,13 @@ public class Tests {
 		Dollar five = new Dollar(5);
 		assertEquals(new Dollar(10), five.times(2));
 		assertEquals(new Dollar(15), five.times(3));
+	}
+	
+	@Test
+	public void testFrancMultiplication(){
+		Franc five = new Franc(5);
+		assertEquals(new Franc(10), five.times(2));
+		assertEquals(new Franc(15), five.times(3));
 	}
 	
 	@Test
