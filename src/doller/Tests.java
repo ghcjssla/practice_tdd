@@ -48,32 +48,37 @@ import org.junit.Test;
  * 2.완벽하진 않지만 그럭저럭 봐줄만한 방법(getClass())으로 테스트를 통과하게 만들었다.
  * 3.더 많은 동기가 있기 전에는 더 많은 설계를 도입하지 않기로 했다.
  * 
+ * 8장
+ * 1.동일한 메서드(times)의 두 변이혀 메서드 서명부를 통일시킴으로써 중복 제거를 향해 한 단계 더 전진했다.
+ * 2.최소한 메서드 선언부만이라도 공통 상위 클래스(superclass)로 옮겼다.
+ * 3.팩토리 메서드를 도입하여 테스트 코드에서 콘크리트 하위 클래스의 존재 사실을 분리해냈다.
+ * 4.하위 클래스가 사라지면 몇몇 테스트는 불필요한 여분의 것이 된다는 것을 인식했다. 하지만 일단 그냥 뒀다.
  */
 public class Tests {
 	@Test
 	public void testMultiplication(){
-		Dollar dollarfive = new Dollar(5);
-		assertEquals(new Dollar(10), dollarfive.times(2));
-		assertEquals(new Dollar(15), dollarfive.times(3));
+		Money dollarfive = Money.dollar(5);
+		assertEquals(Money.dollar(10), dollarfive.times(2));
+		assertEquals(Money.dollar(15), dollarfive.times(3));
 		
-		Franc francfive = new Franc(5);
-		assertEquals(new Franc(10), francfive.times(2));
-		assertEquals(new Franc(15), francfive.times(3));
+		Money francfive = Money.franc(5);
+		assertEquals(Money.franc(10), francfive.times(2));
+		assertEquals(Money.franc(15), francfive.times(3));
 	}
 	
 	@Test
 	public void testFrancMultiplication(){
-		Franc five = new Franc(5);
-		assertEquals(new Franc(10), five.times(2));
-		assertEquals(new Franc(15), five.times(3));
+		Money five = Money.franc(5);
+		assertEquals(Money.franc(10), five.times(2));
+		assertEquals(Money.franc(15), five.times(3));
 	}
 	
 	@Test
 	public void testEqualiity(){
-		assertTrue(new Dollar(5).equals(new Dollar(5)));
-		assertFalse(new Dollar(5).equals(new Dollar(6)));
-		assertTrue(new Franc(5).equals(new Franc(5)));
-		assertFalse(new Franc(5).equals(new Franc(6)));
-		assertFalse(new Franc(5).equals(new Dollar(5)));
+		assertTrue(Money.dollar(5).equals(Money.dollar(5)));
+		assertFalse(Money.dollar(5).equals(Money.dollar(6)));
+		assertTrue(Money.franc(5).equals(Money.franc(5)));
+		assertFalse(Money.franc(5).equals(Money.franc(6)));
+		assertFalse(Money.franc(5).equals(Money.dollar(5)));
 	}
 }
