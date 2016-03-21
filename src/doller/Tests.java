@@ -72,6 +72,14 @@ import org.junit.Test;
  * 11장
  * 1. 하위 클래스의 속을 들어내는 걸 완료하고, 하위 클래스를 삭제했다.
  * 2. 기존의 소스 구조에서는 필요했지만 새로운 구조에서는 필요 없게 된 테스트를 제거했다.
+ * 
+ * 12장
+ * 1. 큰 테스트를 작은테스트($5+10CHF에서 $5+$5로)로 줄여서 발전을 나타낼 수 있도록 했다.
+ * 2. 우리에게 필요한 계산(computation)에 대한 가능한 메타포들을 신중히 생각해봤다.
+ * 3. 새 메타포에 기반하여 기존의 테스트를 재작성했다.
+ * 4. 테스트를 빠르게 컴파일 했다.
+ * 5. 그리고 테스트를 실행했다.
+ * 6. 진짜 구현을 만들기 위해 필요한 리팩토링을 약간의 전율과 함께 기대했다. 응??
  */
 public class Tests {
 	@Test
@@ -112,5 +120,14 @@ public class Tests {
 		assertTrue(Money.dollar(5).equals(Money.dollar(5)));
 		assertFalse(Money.dollar(5).equals(Money.dollar(6)));
 		assertFalse(Money.franc(5).equals(Money.dollar(5)));
+	}
+	
+	@Test
+	public void testSimpleAdddition(){
+		Money five = Money.dollar(5);
+		Expression sum = five.plus(five);
+		Bank bank = new Bank();
+		Money reduced = bank.reduce(sum, "USD");
+		assertEquals(Money.dollar(10), reduced);
 	}
 }
