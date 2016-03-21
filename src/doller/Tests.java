@@ -1,6 +1,8 @@
 package doller;
 import static org.junit.Assert.*;
 
+import java.util.Currency;
+
 import org.junit.Test;
 /**
  * 
@@ -53,6 +55,13 @@ import org.junit.Test;
  * 2.최소한 메서드 선언부만이라도 공통 상위 클래스(superclass)로 옮겼다.
  * 3.팩토리 메서드를 도입하여 테스트 코드에서 콘크리트 하위 클래스의 존재 사실을 분리해냈다.
  * 4.하위 클래스가 사라지면 몇몇 테스트는 불필요한 여분의 것이 된다는 것을 인식했다. 하지만 일단 그냥 뒀다.
+ * 
+ * 9장
+ * 1. 큰 설계 아이디어를 다루다가 조금 곤경에 빠졌다. 그래서 좀 전에 주목했던 더 작은 작업을 수행했다.
+ * 2. 다른 부분들을 호출자(팩토리 메서드)로 옮김으로써 두 생성자를 일치 시켰다.
+ * 3. times()가 팩토리 메서드를 사용하도록 만들기 위해 리팩토링을 잠시 중단했다.
+ * 4. 비슷한 리팩토링*Franc에 했던 일을 Dollar에도 적용)을 한번의 큰 단계로 처리했다.
+ * 5. 동일한 생성자들을 상위 클래스로 올렸다.
  */
 public class Tests {
 	@Test
@@ -80,5 +89,11 @@ public class Tests {
 		assertTrue(Money.franc(5).equals(Money.franc(5)));
 		assertFalse(Money.franc(5).equals(Money.franc(6)));
 		assertFalse(Money.franc(5).equals(Money.dollar(5)));
+	}
+	
+	@Test
+	public void testCurrency(){
+		assertEquals("USD", Money.dollar(1).currency());
+		assertEquals("CHF", Money.franc(1).currency());
 	}
 }
