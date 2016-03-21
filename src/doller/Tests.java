@@ -1,7 +1,7 @@
 package doller;
-import static org.junit.Assert.*;
-
-import java.util.Currency;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 /**
@@ -68,6 +68,10 @@ import org.junit.Test;
  * 2. 단지 디버깅을 위해 테스트 없이 toString()을 작성했다.
  * 3. Franc 대신 Money를 반환하는 변경을 시도한 뒤 그것이 잘 작동할지를 테스트가 말하도록 했다.
  * 4. 실험해본 걸 뒤로 물리고 또 다른 테스트를 작성했다. 테스트를 작동 했더니 실험도 제대로 작동했다.
+ * 
+ * 11장
+ * 1. 하위 클래스의 속을 들어내는 걸 완료하고, 하위 클래스를 삭제했다.
+ * 2. 기존의 소스 구조에서는 필요했지만 새로운 구조에서는 필요 없게 된 테스트를 제거했다.
  */
 public class Tests {
 	@Test
@@ -104,7 +108,9 @@ public class Tests {
 	}
 	
 	@Test
-	public void testDifferencClassEquality(){
-		assertTrue(new Money(10, "CHF").equals(new Franc(10, "CHF")));
+	public void testEquality(){
+		assertTrue(Money.dollar(5).equals(Money.dollar(5)));
+		assertFalse(Money.dollar(5).equals(Money.dollar(6)));
+		assertFalse(Money.franc(5).equals(Money.dollar(5)));
 	}
 }

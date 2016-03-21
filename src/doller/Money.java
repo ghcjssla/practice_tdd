@@ -4,7 +4,7 @@ public class Money {
 	protected int amount;
 	protected String currency;
 	Money times(int multiplier) {
-		return new Dollar(amount * multiplier, currency);
+		return new Money(amount * multiplier, currency);
 	}
 	
 	Money(int amount, String currency){
@@ -18,11 +18,11 @@ public class Money {
 	}
 
 	static Money dollar(int amount) {
-		return new Dollar(amount, "USD");
+		return new Money(amount, "USD");
 	}
 	
 	static Money franc(int amount) {
-		return new Franc(amount, "CHF");
+		return new Money(amount, "CHF");
 	}
 	
 	String currency(){
