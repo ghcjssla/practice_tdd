@@ -62,6 +62,12 @@ import org.junit.Test;
  * 3. times()가 팩토리 메서드를 사용하도록 만들기 위해 리팩토링을 잠시 중단했다.
  * 4. 비슷한 리팩토링*Franc에 했던 일을 Dollar에도 적용)을 한번의 큰 단계로 처리했다.
  * 5. 동일한 생성자들을 상위 클래스로 올렸다.
+ * 
+ * 10장
+ * 1. 두 times()를 일치시키기 위해 그 메서드들이 호출하는 다른 메서드들을 인라인시킨 후 상수를 변수로 바꿔주었다.
+ * 2. 단지 디버깅을 위해 테스트 없이 toString()을 작성했다.
+ * 3. Franc 대신 Money를 반환하는 변경을 시도한 뒤 그것이 잘 작동할지를 테스트가 말하도록 했다.
+ * 4. 실험해본 걸 뒤로 물리고 또 다른 테스트를 작성했다. 테스트를 작동 했더니 실험도 제대로 작동했다.
  */
 public class Tests {
 	@Test
@@ -95,5 +101,10 @@ public class Tests {
 	public void testCurrency(){
 		assertEquals("USD", Money.dollar(1).currency());
 		assertEquals("CHF", Money.franc(1).currency());
+	}
+	
+	@Test
+	public void testDifferencClassEquality(){
+		assertTrue(new Money(10, "CHF").equals(new Franc(10, "CHF")));
 	}
 }
