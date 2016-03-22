@@ -80,6 +80,14 @@ import org.junit.Test;
  * 4. 테스트를 빠르게 컴파일 했다.
  * 5. 그리고 테스트를 실행했다.
  * 6. 진짜 구현을 만들기 위해 필요한 리팩토링을 약간의 전율과 함께 기대했다. 응??
+ * 
+ * 13장
+ * 1. 모든 중복이 제거되기 전까지는 테스트를 통과한 것으로 치지 않았다.
+ * 2. 구현하기 위해 역방향이 아닌 순방향으로 작업했다.
+ * 3. 앞으로 필요할 것으로 예상되는 객체(Sum)의 생성을 강요하기 위한 테스트를 작성했다.
+ * 4. 빠른 속도로 구현하기 시작했다(Sum)생성자
+ * 5.일단 한 곳에 캐스팅을 이용해서 코드를 구현했다가, 테스트가 돌아가자 그 코드를 적당한 자리로 옮겼다.
+ * 6. 명시적인 클래스 검사를 제거하기 위해 다형성을 사용했다.
  */
 public class Tests {
 	@Test
@@ -129,5 +137,29 @@ public class Tests {
 		Bank bank = new Bank();
 		Money reduced = bank.reduce(sum, "USD");
 		assertEquals(Money.dollar(10), reduced);
+	}
+	
+	@Test
+	public void testPlusReturnsSum(){
+		Money five = Money.dollar(5);
+		Expression result = five.plus(five);
+		Sum sum = (Sum) result;;
+		assertEquals(five, sum.augend);
+		assertEquals(five, sum.addend);
+	}
+	
+	@Test
+	public void testReduceSum(){
+		Expression sum = new Sum(Money.dollar(3), Money.dollar(4));
+		Bank bank = new Bank();
+		Money result = bank.reduce(sum, "USD");
+		assertEquals(Money.dollar(7), result);
+	}
+	
+	@Test
+	public void testReduceMoney(){
+		Bank bank = new Bank();
+		Money result = bank.reduce(Money.dollar(1), "USD");
+		assertEquals(Money.dollar(1), result);
 	}
 }
