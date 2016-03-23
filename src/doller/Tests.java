@@ -1,9 +1,11 @@
 package doller;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
 /**
  * 
  * @author ghcjssla
@@ -100,106 +102,142 @@ import org.junit.Test;
  * 1. 원하는 테스트를 작성하고, 한 단계에 달성할 수 있도록 뒤로 물렀다.
  * 2. 좀더 추상적인 선언을 통해 가지에서 뿌리(애초의 테스트 케이스)로 일반화 했다.
  * 3. 변경 후(Expression fiveBucks), 그 영향을 받은 다른 부분들을 변경하기 위해 컴파일러의 지시를 따랐다(Expression에 plus()를 추가 하기 등등)
+ * 
+ * 16장
+ * 1. 미래에 코드를 읽을 다른 사람들을염두에 둔 테스트를 작성했다.
+ * 2. TDD와 여러분의 현재 개발 스타일을 비교해 볼 수 있는 실험 방법을 제시했다.
+ * 3. 또 한번 선언부에 대한 수정이 시스템 나머지 부분으로 번져갔고, 문제를 고치기 위해 역시 컴파일러의 조언을 따랐다.
+ * 4. 잠시 실험을 시도했는데, 제대로 되지 않아서 버렸다.(반전..........)
  */
 public class Tests {
 	@Test
-	public void testMultiplication(){
+	public void testMultiplication() {
 		Money dollarfive = Money.dollar(5);
 		assertEquals(Money.dollar(10), dollarfive.times(2));
 		assertEquals(Money.dollar(15), dollarfive.times(3));
-		
+
 		Money francfive = Money.franc(5);
 		assertEquals(Money.franc(10), francfive.times(2));
 		assertEquals(Money.franc(15), francfive.times(3));
 	}
-	
+
 	@Test
-	public void testFrancMultiplication(){
+	public void testFrancMultiplication() {
 		Money five = Money.franc(5);
 		assertEquals(Money.franc(10), five.times(2));
 		assertEquals(Money.franc(15), five.times(3));
 	}
-	
+
 	@Test
-	public void testEqualiity(){
+	public void testEqualiity() {
 		assertTrue(Money.dollar(5).equals(Money.dollar(5)));
 		assertFalse(Money.dollar(5).equals(Money.dollar(6)));
 		assertTrue(Money.franc(5).equals(Money.franc(5)));
 		assertFalse(Money.franc(5).equals(Money.franc(6)));
 		assertFalse(Money.franc(5).equals(Money.dollar(5)));
 	}
-	
+
 	@Test
-	public void testCurrency(){
+	public void testCurrency() {
 		assertEquals("USD", Money.dollar(1).currency());
 		assertEquals("CHF", Money.franc(1).currency());
 	}
-	
+
 	@Test
-	public void testEquality(){
+	public void testEquality() {
 		assertTrue(Money.dollar(5).equals(Money.dollar(5)));
 		assertFalse(Money.dollar(5).equals(Money.dollar(6)));
 		assertFalse(Money.franc(5).equals(Money.dollar(5)));
 	}
-	
+
 	@Test
-	public void testSimpleAdddition(){
+	public void testSimpleAdddition() {
 		Money five = Money.dollar(5);
 		Expression sum = five.plus(five);
 		Bank bank = new Bank();
 		Money reduced = bank.reduce(sum, "USD");
 		assertEquals(Money.dollar(10), reduced);
 	}
-	
+
 	@Test
-	public void testPlusReturnsSum(){
+	public void testPlusReturnsSum() {
 		Money five = Money.dollar(5);
 		Expression result = five.plus(five);
-		Sum sum = (Sum) result;;
+		Sum sum = (Sum) result;
+		;
 		assertEquals(five, sum.augend);
 		assertEquals(five, sum.addend);
 	}
-	
+
 	@Test
-	public void testReduceSum(){
+	public void testReduceSum() {
 		Expression sum = new Sum(Money.dollar(3), Money.dollar(4));
 		Bank bank = new Bank();
 		Money result = bank.reduce(sum, "USD");
 		assertEquals(Money.dollar(7), result);
 	}
-	
+
 	@Test
-	public void testReduceMoney(){
+	public void testReduceMoney() {
 		Bank bank = new Bank();
 		Money result = bank.reduce(Money.dollar(1), "USD");
 		assertEquals(Money.dollar(1), result);
 	}
-	
+
 	@Test
-	public void testIdentityRate(){
+	public void testIdentityRate() {
 		assertEquals(1, new Bank().rate("USD", "USD"));
 	}
-	
+
 	@Test
-	public void testReduceMoneyDifferentCurrency(){
+	public void testReduceMoneyDifferentCurrency() {
 		Bank bank = new Bank();
 		bank.addRate("CHF", "USD", 2);
 		Money result = bank.reduce(Money.franc(2), "USD");
 		assertEquals(Money.dollar(1), result);
 	}
-	
+
 	@Test
-	public void testArrayEquals(){
-		assertEquals(new Object[] {"abc"}, new Object[] {"abc"});
+	public void testArrayEquals() {
+		assertEquals(new Object[] { "abc" }, new Object[] { "abc" });
 	}
-	
+
 	@Test
-	public void testMixedAddition(){
+	public void testMixedAddition() {
 		Expression fiveBucks = Money.dollar(5);
 		Expression tenFrancs = Money.franc(10);
 		Bank bank = new Bank();
 		bank.addRate("CHF", "USD", 2);
-		Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD" );
-		assertEquals(Money.dollar(10),result);
+		Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD");
+		assertEquals(Money.dollar(10), result);
 	}
+
+	@Test
+	public void testSumPlusMoney() {
+		Expression fiveBucks = Money.dollar(5);
+		Expression tenFrancs = Money.franc(10);
+		Bank bank = new Bank();
+		bank.addRate("CHF", "USD", 2);
+		Expression sum = new Sum(fiveBucks, tenFrancs).plus(fiveBucks);
+		Money result = bank.reduce(sum, "USD");
+		assertEquals(Money.dollar(15), result);
+	}
+
+	@Test
+	public void testSumTimes() {
+		Expression fiveBucks = Money.dollar(5);
+		Expression tenFrancs = Money.franc(10);
+		Bank bank = new Bank();
+		bank.addRate("CHF", "USD", 2);
+		Expression sum = new Sum(fiveBucks, tenFrancs).times(2);
+		Money result = bank.reduce(sum, "USD");
+		assertEquals(Money.dollar(20), result);
+	}
+	
+//	@Test
+//	public void testPlusSameCurrencyReturnsMoney(){
+//		Expression sum = Money.dollar(1).plus(Money.dollar(1));
+//		assertTrue(sum instanceof Money);
+//	}
+
 }
