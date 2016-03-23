@@ -95,6 +95,11 @@ import org.junit.Test;
  * 3. 자바의 오퍼레이션에 대한 가정을 검사해보기 위한 테스트(testArrayEquals)를 작성했다.
  * 4. 별도의 테스트 없이 전용(private) 도우미(helper)클래스를 만들었다.
  * 5. 리팩토링하다가 실수를 했고, 그 문제를 분리하기 위해 또 하나의 테스트를 작성하면서 계속 전진해 가기로 선택했다.
+ * 
+ * 15장
+ * 1. 원하는 테스트를 작성하고, 한 단계에 달성할 수 있도록 뒤로 물렀다.
+ * 2. 좀더 추상적인 선언을 통해 가지에서 뿌리(애초의 테스트 케이스)로 일반화 했다.
+ * 3. 변경 후(Expression fiveBucks), 그 영향을 받은 다른 부분들을 변경하기 위해 컴파일러의 지시를 따랐다(Expression에 plus()를 추가 하기 등등)
  */
 public class Tests {
 	@Test
@@ -186,5 +191,15 @@ public class Tests {
 	@Test
 	public void testArrayEquals(){
 		assertEquals(new Object[] {"abc"}, new Object[] {"abc"});
+	}
+	
+	@Test
+	public void testMixedAddition(){
+		Expression fiveBucks = Money.dollar(5);
+		Expression tenFrancs = Money.franc(10);
+		Bank bank = new Bank();
+		bank.addRate("CHF", "USD", 2);
+		Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD" );
+		assertEquals(Money.dollar(10),result);
 	}
 }
